@@ -16,7 +16,7 @@
   "mark": "bar",
   "encoding": {
     "x": {"field": "Country", "type": "nominal", "title": "Countries"},
-    "y": {"aggregate": "sum", "field": "Cases", "title": "Ebola cases count"},
+    "y": {"aggregate": "sum", "field": "Cases", "title": "Ebola total cases"},
     "color": {"field": "Country", "type": "nominal", "title": "Countries"},
     "opacity": {
       "condition": {"selection": "country_highlight", "value": 1},
