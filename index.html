@@ -7,7 +7,7 @@
   </head>
   <body>
     <div id="vis"></div>
-
+    <div id="vis2"></div>
     <script type="text/javascript">
       var yourVlSpec = {
 			$schema: "https://vega.github.io/schema/vega-lite/v4.json",
@@ -46,6 +46,11 @@
 			}
 			};
       vegaEmbed('#vis', yourVlSpec);
+
+  var vis2 = "\week10vis.json";
+  
+  vegaEmbed('#vis2', vis2).then(function(result) {
+  }).catch(console.error);
     </script>
   </body>
 </html>
