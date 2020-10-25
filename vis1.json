@@ -1,27 +1,31 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
   "data": {
-    "url": "https://raw.githubusercontent.com/weihan-tan0035/FIT3179_HW/main/Police_Department_Incidents_Assault.csv"
+    "url": "https://raw.githubusercontent.com/mong0009monash/FIT3179/main/ebola_data.csv"
   },
-  "title": "Number of Assault cases based on District",
+  "title": "Number of Ebola cases base on country",
   "width": 600,
   "height": 600,
   "selection": {
-    "district_highlight": {
+    "country_highlight": {
       "type": "multi",
-      "fields": ["PdDistrict"],
+      "fields": ["Country"],
       "bind": "legend"
     }
   },
   "mark": "bar",
   "encoding": {
-    "x": {"aggregate": "count", "field": "PdDistrict", "title": "crime count"},
-    "y": {"field": "PdDistrict", "type": "nominal", "title": "District"},
-    "color": {"field": "PdDistrict", "type": "nominal", "title": "District"},
+    "x": {"field": "Country", "type": "nominal", "title": "Countries"},
+    "y": {"aggregate": "sum", "field": "Cases", "title": "Ebola cases count"},
+    "color": {"field": "Country", "type": "nominal", "title": "Countries"},
     "opacity": {
-      "condition": {"selection": "district_highlight", "value": 1},
-      "value": 0.2
-    }
+      "condition": {"selection": "country_highlight", "value": 1},
+      "value": 0.4
+    },
+    "tooltip": [
+      {"field": "Country", "type": "nominal", "title": "Country"},
+      {"field": "Cases", "type": "quantitative"}
+    ]
   },
   "config": {}
 }
