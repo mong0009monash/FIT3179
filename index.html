@@ -1,183 +1,21 @@
 <html>
   <head>
-    <title>Ebola total cases between 2014 to 2016</title>
+    <title>Week 10</title>
     <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-<script src="https://cdn.jsdelivr.net/npm/vega-lite@4"></script>
-<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
   </head>
   <body>
     <div id="vis1"></div>
     <div id="vis2"></div>
-    <script type="text/javascript">
-	var yourVlSpec = {
- 		$schema: "https://vega.github.io/schema/vega-lite/v4.json",
- 		width: 800,
- 		height: 600,
- 		title: "COVID-19 Cases per Country (13 Oct 2020)",
- 		data: {
-   			url:"https://raw.githubusercontent.com/KaneSec/vega_lite/main/4_interactive_scatter_plot/data/COVID_19_10_Oct_2020.csv"
-        	},
- 		params: [{
-  			name: "Population_Above",
-  			value: 0,
-  			bind: {
-  			input: "range",
-  			min: 0,
-  			max: 100000000,
-  			step: 1000000,
-  			name: "Minimum Population: "}
- 			},
- 			{
-  			name: "Continent_selection",
-  			bind: {
-  			input: "select",
-  			options: [null,"North America","South America","Europe","Africa","Asia","Oceania"],
-  			labels:["Show All","North America","South America","Europe","Africa","Asia","Oceania"],
-  			name: "Continent Selection: "}
- 			}],
- 		transform: [{filter: "datum.Active > 0"},{filter: "datum.Deaths > 0"},{filter: "datum.Population > Population_Above"},{filter: "Continent_selection == null || datum.Continent == Continent_selection"},
- 			{calculate: "datum.Confirmed/datum.Population * 10000","as": "Cases per 10,000 Population"}
-			],
- 		encoding: {
- 			x: {
- 			field: "Confirmed",
- 			type: "quantitative",
- 			title: "Confirmed Cases",
- 			axis: {"tickCount": 7},
- 			scale: {"type": "log", "domain": [1, 10000000]}
-			},
- 			y: {
- 			field: "Deaths",
- 			type: "quantitative",
- 			axis: {tickCount: 6},
- 			scale: {type: "log", "domain": [1, 1000000]}}
- 			},
- 			layer: [{
- 				selection: {
- 				continent_highlight: {
- 				type: "multi",
- 				fields: ["Continent"],
- 				bind: "legend"}
- 				},
- 				mark: "circle",
- 				encoding: {
- 				size: {
- 				field: "Population",
- 				type: "quantitative",
- 				scale: {
- 				type: "threshold",
- 				domain: [1000000, 10000000, 50000000, 100000000, 500000000],
- 				range: [10, 50, 150, 200, 300, 400]
- 				},
- 				legend: {format: ".1s"}
- 				},
- 				color: {
- 					field: "Continent",
- 					type: "nominal",
- 					scale: {
- 					domain: [
- 					"North America",
-					"South America",
- 					"Europe",
- 					"Africa",
- 					"Asia",
- 					"Oceania"
- 				],
- 				range: [
- 					"#e41a1c",
- 					"#984ea3",
- 					"#ff7f00",
- 					"#a6cee3",
- 					"#377eb8",
- 					"#a65628"
- 					]}
- 				},
- 				opacity: {
- 				condition: {selection: "continent_highlight", value: 0.6},
- 				value: 0.2
- 					},
- 				tooltip: [
- 				{field: "Country", type: "nominal"},
- 				{field: "Confirmed", type: "quantitative", format: ","},
- 				{field: "Active", type: "quantitative", format: ","},
- 				{field: "Deaths", type: "quantitative", format: ","},
- 				{field: "Recovered", type: "quantitative", format: ","},
- 				{
- 				field: "Cases per 10,000 Population",
- 				type: "quantitative",
- 				format: ".2f"}
- 				]}
- 				},
- 				{
- 				mark: {
- 					type: "text",
- 					align: "right",
- 					baseline: "middle",
- 					dx: -12,
- 					fontSize: 11.5,
- 					fontStyle: "italic"
- 				},
- 					encoding: {
- 					text: {"field": "Country", "type": "nominal"},
- 					color: {"value": "black"},
- 					opacity: {
- 					condition: {
-					test: "datum['Country'] == 'China' || datum['Country'] =='Singapore' || datum['Country'] == 'Australia' || datum['Country'] == 'NewZealand' || datum['Country'] =='Italy' || datum['Country'] == 'Yemen' ||datum['Country'] == 'United States'",
-					value: 1
- 				},
- 				value: 0
- 				},
- 				tooltip: [
- 				{field: "Country", type: "nominal"},
- 				{field: "Confirmed", type: "quantitative", format: ","},
- 				{field: "Active", type: "quantitative", format: ","},
- 				{field: "Deaths", type: "quantitative", format: ","},
- 				{field: "Recovered", type: "quantitative", format: ","},
- 				{field: "Cases per 10,000 Population",type: "quantitative",format: ".2f"}
-					]
-				}
-			}
-		]
-	}
-	vegaEmbed('#vis1', yourVlSpec);
 
-	var yourVlSpec = {
-			$schema: "https://vega.github.io/schema/vega-lite/v4.json",
-			title: "Ebola confirmed/suspected/probable cases (2014-2016)",
-			width: 800,
-			height: 600,
-			data: {
-				url: "https://raw.githubusercontent.com/mong0009monash/FIT3179/main/africa.geo.topojson",
-				format: {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
-			},
-			transform: [
-				{
-				lookup: "properties.NAME",
-				from: {
-					data: {
-					url: "https://raw.githubusercontent.com/mong0009monash/FIT3179/main/ebola_data.csv"
-					},
-					key: "Country",
-					fields: ["Cases"]
-				}
-				},
-				{calculate: "datum.Cases + 0.1", "as": "Cases"}
-			],
-			projection: {"type": "equirectangular"},
-			mark: {"type": "geoshape"},
-			encoding: {
-				color: {
-				field: "Cases",
-				type: "quantitative",
-				scale: {"type": "log"}
-				},
-				tooltip: [
-				{field: "properties.NAME", "type": "nominal", "title": "Country"},
-				{field: "Cases", "type": "quantitative"}
-				]
-			}
-			};
-      vegaEmbed('#vis2', yourVlSpec);
+    <script type="text/javascript">
+      var v1 = "vis1.json"
+      vegaEmbed('#vis1', v1).then(function(result){}).catch(console.error);
+
+      var v2 = "week10vis.json"
+      vegaEmbed('#vis1', v2).then(function(result){}).catch(console.error);
+	
     </script>
   </body>
 </html>
